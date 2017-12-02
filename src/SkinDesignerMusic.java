@@ -4,11 +4,11 @@ import org.jfugue.rhythm.Rhythm;
 import org.jfugue.theory.ChordProgression;
 
 public class SkinDesignerMusic implements Runnable {
-	Player player;
-	Pattern baseProgression;
+	private Player player;
+	private Pattern baseProgression;
 	private Pattern rhythm;
 	
-	public SkinDesignerMusic() {
+	private SkinDesignerMusic() {
 		player = new Player();
 		baseProgression = new ChordProgression("I IV V")
 	                .distribute("7%6")
@@ -34,4 +34,8 @@ public class SkinDesignerMusic implements Runnable {
        }
 	}
 
+	public static void start() {
+		Thread musicThread = new Thread(new SkinDesignerMusic());
+		musicThread.start();
+	}
 }

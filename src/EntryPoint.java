@@ -6,23 +6,24 @@ import javax.swing.WindowConstants;
 public class EntryPoint {
 
 	public static void main(String[] args) {
-		Thread musicThread = new Thread(new SkinDesignerMusic());
-		musicThread.start();
-		
         JFrame skinDesigner = new JFrame("Minecraft Skin Designer");
-		
-        SkinDesignerUI titlePanel = new SkinDesignerUI();
-		skinDesigner.getContentPane().add(titlePanel);
-		
+
+		SkinDesignerUI skinDesignerUI = createSkinDesignerUI();
+		skinDesigner.getContentPane().add(skinDesignerUI);
 		skinDesigner.pack();
-		
 		skinDesigner.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+
+		skinDesigner.setVisible(true);
+
+		SkinDesignerMusic.start();
+	}
+
+	private static SkinDesignerUI createSkinDesignerUI() {
+		SkinDesignerUI titlePanel = new SkinDesignerUI();
 		titlePanel.addKeyListener(titlePanel);
 		titlePanel.setFocusable(true);
 		titlePanel.requestFocusInWindow();
-	
-		skinDesigner.setVisible(true);
+		return titlePanel;
 	}
 
 }
