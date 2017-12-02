@@ -53,8 +53,6 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-//		Graphics2D graphics2d = (Graphics2D) graphics;
-
         graphics.setColor(Color.BLUE);
         graphics.fillRect(0, 0, 100000000, 100000000);
 
