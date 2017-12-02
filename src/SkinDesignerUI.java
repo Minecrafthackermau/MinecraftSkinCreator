@@ -22,32 +22,76 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_C) {
-            startDesigning = true;
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            x = x + 1;
-        } else if (e.getKeyCode() == KeyEvent.VK_A) {
-            x = x - 1;
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            y = y + 1;
-        } else if (e.getKeyCode() == KeyEvent.VK_W) {
-            y = y - 1;
-        } else if (e.getKeyCode() == KeyEvent.VK_L) {
+            startDesigning = !startDesigning;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_D) {
+            x = x +2;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            x = x -2;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            y = y +2;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_W) {
+            y = y -2;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_L) {
             L = L + 1;
             if (L > 255) {
-                L = L - 255;
+                L = L-1;
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_K) {
+        }
+        if (e.getKeyCode() == KeyEvent.VK_K) {
             K = K + 1;
             if (K > 255) {
-                K = 0;
+                K = K-1;
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_J) {
+        }
+        if (e.getKeyCode() == KeyEvent.VK_J) {
             J = J + 1;
             if (J > 255) {
-                J = 0;
+                J = J-1;
             }
-        }else if(e.getKeyCode() == KeyEvent.VK_H){
+        }
+        if(e.getKeyCode() == KeyEvent.VK_H){
         	help = !help;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_T){
+        	J = 0;
+        			K = 0;
+        			L = 0;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_P){
+        	x = 0;
+        	y = 0;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_1){
+        	x = x+10;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_2){
+        	x = x+20;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_3){
+        	x = x+30;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_4){
+        	x = x+40;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_5){
+        	x = x+50;
+        }
+        if(x > 610){
+        	x = 610;
+        }
+        if(x < 0){
+        	x = 0;
+        }
+        if(y < 0){
+        	y = 0;
+        }
+        if(y > 450){
+        	y = 450;
         }
         this.repaint();
     }
@@ -76,12 +120,16 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
             graphics.setColor(new Color(L, K, J));
             graphics.fillRect(0, 0, 1000000, 10000000);
             graphics.setColor(Color.BLUE);
-            graphics.fillRect(x, y, 30, 30);
+            graphics.drawRect(x, y, 30, 30);
         }
+        graphics.setColor(Color.WHITE);
+        graphics.drawString("H = help", 300, 240);
 if(help == true){
 	graphics.setColor(Color.WHITE);
 	graphics.fillRect(0,  0,  1000000,  1000000);
-
+graphics.setColor(Color.BLACK);
+graphics.drawString("C = start designing", 0, 20);
+graphics.drawString("p = reset location", 0, 50);
 }
         
     }
