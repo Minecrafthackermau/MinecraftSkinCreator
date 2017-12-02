@@ -4,7 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class SkinDesignerUI extends JPanel implements KeyListener {
-    boolean startDesigning = false;
+    boolean help = false;
+	boolean startDesigning = false;
     int x = 0;
     int y = 0;
     int K = 0;
@@ -45,6 +46,8 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
             if (J > 255) {
                 J = 0;
             }
+        }else if(e.getKeyCode() == KeyEvent.VK_H){
+        	help = !help;
         }
         this.repaint();
     }
@@ -75,7 +78,12 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
             graphics.setColor(Color.BLUE);
             graphics.fillRect(x, y, 30, 30);
         }
+if(help == true){
+	graphics.setColor(Color.WHITE);
+	graphics.fillRect(0,  0,  1000000,  1000000);
 
+}
+        
     }
 }
 
