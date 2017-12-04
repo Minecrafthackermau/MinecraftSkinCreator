@@ -13,13 +13,14 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
     int K = 0;
     int L = 0;
     int J = 0;
+    int WITH = 30;
 
     private final Set<Integer> pressed = new HashSet<>();
     {
-        javax.swing.Timer timer = new Timer(15, e -> {
+         javax.swing.Timer timer = new Timer(15, e -> {
             if (pressed.size() > 0) {
                 for (int keyCode : pressed) {
-                    updatePositionsFromKeys(keyCode);
+                    updatePositionsFromHeldKeys(keyCode);
                 }
                 this.repaint();
             }
@@ -32,11 +33,16 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
         return new Dimension(640, 480);
     }
 
-
-    private void updatePositionsFromKeys(int keyCode){
+    private void updatePositionsFromKeyRelease(int keyCode){
         if (keyCode == KeyEvent.VK_C) {
             startDesigning = !startDesigning;
         }
+        if (keyCode == KeyEvent.VK_H) {
+            help = !help;
+        }
+    }
+
+    private void updatePositionsFromHeldKeys(int keyCode){
         if (keyCode == KeyEvent.VK_D) {
             x = x + 2;
         }
@@ -66,9 +72,6 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
             if (J > 255) {
                 J = J - 1;
             }
-        }
-        if (keyCode == KeyEvent.VK_H) {
-            help = !help;
         }
         if (keyCode == KeyEvent.VK_T) {
             J = 0;
@@ -106,8 +109,14 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
         if (y > 450) {
             y = 450;
         }
+    
+	    if(keyCode == KeyEvent.VK_Q){
+	    	J = 255;
+	    	K = 255;
+	    	L = 255;
+	    }
     }
-
+    
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -152,14 +161,18 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        pressed.add(e.getKeyCode());
-        updatePositionsFromKeys(e.getKeyCode());
-        this.repaint();
+        int keyCode = e.getKeyCode();
+		pressed.add(keyCode);
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        pressed.remove(e.getKeyCode());
+        int keyCode = e.getKeyCode();  
+    	pressed.remove(keyCode);
+        updatePositionsFromKeyRelease(keyCode);
+        updatePositionsFromHeldKeys(keyCode);
+        this.repaint();
     }
 }
 
