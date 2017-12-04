@@ -14,6 +14,12 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
     int L = 0;
     int J = 0;
     int WITH = 30;
+    int HEIGHT = 30;
+    int R = 50;
+    int G = 50;
+    int B = 50;
+    int V = -10000000;
+    int C = -10000;
 
     private final Set<Integer> pressed = new HashSet<>();
     {
@@ -81,6 +87,8 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
         if (keyCode == KeyEvent.VK_P) {
             x = 0;
             y = 0;
+            WITH = 30;
+            HEIGHT = 30;
         }
         if (keyCode == KeyEvent.VK_1) {
             x = x + 10;
@@ -115,8 +123,55 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
 	    	K = 255;
 	    	L = 255;
 	    }
+   
+    if(keyCode == KeyEvent.VK_O){
+    	WITH = WITH+1;
     }
-    
+    if(keyCode == KeyEvent.VK_I){
+    	HEIGHT = HEIGHT+1;
+    }
+    if(keyCode == KeyEvent.VK_Z){
+    	HEIGHT = HEIGHT-1;
+    }
+    if(HEIGHT < 40){
+    	HEIGHT = 40;
+    }
+    if(keyCode == KeyEvent.VK_X){
+    	WITH = WITH -1;
+    }
+    if(WITH < 40){
+    	WITH = 40;
+    }
+    if(keyCode == KeyEvent.VK_R){
+    	R = R+1;
+    }
+    if(R > 255){
+    	R = 255;
+    }
+    if(keyCode == KeyEvent.VK_G){
+    	G = G+1;
+    }
+    if(G > 255){
+    	G = 255;
+    }
+    if(keyCode == KeyEvent.VK_B){
+    	B = B+1;
+    }
+    if(B > 255){
+    	B = 255;
+    }
+    if (keyCode == KeyEvent.VK_PERIOD){
+    	C = x;
+V = y;    	
+    }
+if(keyCode == KeyEvent.VK_V){
+	C = -100000000;
+	V = -100000000;
+	B = 50;
+	G = 50;
+	R = 50;
+}
+    } 
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -140,8 +195,9 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
         if (startDesigning) {
             graphics.setColor(new Color(L, K, J));
             graphics.fillRect(0, 0, 1000000, 10000000);
-            graphics.setColor(Color.BLUE);
-            graphics.drawRect(x, y, 30, 30);
+            graphics.setColor(new Color(R, G, B));
+            graphics.fillRect(x, y, WITH, HEIGHT);
+            graphics.fillRect(C, V, WITH, HEIGHT);
         }
         graphics.setColor(Color.WHITE);
         graphics.drawString("H = help", 300, 240);
