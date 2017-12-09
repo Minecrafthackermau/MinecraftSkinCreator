@@ -8,6 +8,7 @@ import java.util.Set;
 public class SkinDesignerUI extends JPanel implements KeyListener {
     boolean help = false;
     boolean startDesigning = false;
+boolean saved = false;    
     int x = 0;
     int y = 0;
     int K = 0;
@@ -21,6 +22,7 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
     int V = -10000000;
     int C = -10000;
 
+    
     private final Set<Integer> pressed = new HashSet<>();
     {
          javax.swing.Timer timer = new Timer(15, e -> {
@@ -45,6 +47,9 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
         }
         if (keyCode == KeyEvent.VK_H) {
             help = !help;
+        }
+        if(keyCode == KeyEvent.VK_COMMA){
+        	saved = !saved;
         }
     }
 
@@ -171,7 +176,25 @@ if(keyCode == KeyEvent.VK_V){
 	G = 50;
 	R = 50;
 }
-    } 
+    if(L == 0){
+    	R = 255;
+    }
+    if(K == 0){
+    	G = 255;   
+    }
+    if(J == 0){
+    	B = 255;
+    }
+    if(L == 255){
+    	R = 0;
+    }
+    if(K == 255){
+    	G = 0;
+    }
+    if(J == 255){
+    	B = 0;
+    }
+    }       
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -188,7 +211,8 @@ if(keyCode == KeyEvent.VK_V){
         graphics.setColor(Color.RED);
         graphics.fillRect(0, 0, 30, 10000);
         graphics.fillRect(610, 0, 30, 100000);
-
+graphics.setColor(Color.GREEN);
+graphics.drawString("WELCOME TO THE ADVANCED SKIN CREATOR", 150, 250);
         graphics.setColor(Color.GREEN);
         graphics.fillRect(0, 450, 100000000, 30);
 
@@ -196,17 +220,32 @@ if(keyCode == KeyEvent.VK_V){
             graphics.setColor(new Color(L, K, J));
             graphics.fillRect(0, 0, 1000000, 10000000);
             graphics.setColor(new Color(R, G, B));
-            graphics.fillRect(x, y, WITH, HEIGHT);
+            graphics.drawRect(x, y, 40, 40);
             graphics.fillRect(C, V, WITH, HEIGHT);
         }
         graphics.setColor(Color.WHITE);
-        graphics.drawString("H = help", 300, 240);
-        if (help == true) {
+        graphics.drawString("H = help", 240, 300);
+        if(saved == true){
+        	graphics.setColor(Color.RED);
+        	graphics.fillRect(0,  0,  100000,  100000);
+        	graphics.setColor(Color.BLACK);
+        	graphics.drawString("Saved Skins live HERE", 300, 30);
+        	graphics.setColor(new Color(L, K, J));
+        	graphics.fillRect(150, 100, 80, 80);
+        }else if (help == true) {
             graphics.setColor(Color.WHITE);
             graphics.fillRect(0, 0, 1000000, 1000000);
             graphics.setColor(Color.BLACK);
             graphics.drawString("C = start designing", 0, 20);
             graphics.drawString("p = reset location", 0, 50);
+        graphics.drawString("WASD = move square", 0, 80);
+        graphics.drawString("LKJRGB = change color of background/squares", 0, 120);
+        graphics.drawString("Full Stop/ Period = summon new square", 0, 140);
+        graphics.drawString("VP = reset original square/ reset second square", 0, 170);
+        graphics.drawString("IO = change dimensions", 0, 200);
+        graphics.drawString("QT = change background to WHITE or BLACK", 0, 230);
+        graphics.drawString("1 2 3 4 5 = move square 10, 20, 30, 40, 50 pixles to the right", 0, 260);
+        graphics.drawString("COMMA = saved Skins", 0, 290);
         }
     }
 
