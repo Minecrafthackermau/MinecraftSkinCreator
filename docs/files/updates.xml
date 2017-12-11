@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updateDescriptor baseUrl="">
+  <entry targetMediaFileId="62" updatableVersionMin="" updatableVersionMax="" fileName="MSC_windows-x64_0_1.exe" newVersion="0.1" newMediaFileId="62" fileSize="47122432" bundledJre="windows-amd64-1.8.0_152" archive="false" singleBundle="false">
+    <comment language="en" />
+  </entry>
+  <entry targetMediaFileId="66" updatableVersionMin="" updatableVersionMax="" fileName="MSC_macos_0_1.dmg" newVersion="0.1" newMediaFileId="66" fileSize="2580615" bundledJre="" archive="false" singleBundle="true">
+    <comment language="en" />
+  </entry>
+</updateDescriptor>
