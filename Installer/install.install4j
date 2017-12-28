@@ -1065,5 +1065,5 @@ return console.askYesNo(message, true);
     </macos>
   </mediaSets>
   <buildIds buildAll="true" />
-  <buildOptions verbose="false" faster="false" disableSigning="false" disableJreBundling="false" debug="false" />
+  <buildOptions verbose="false" faster="false" disableSigning="false" disableJreBundling="true" debug="false" />
 </install4j>
