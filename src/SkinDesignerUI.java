@@ -24,9 +24,9 @@ public class SkinDesignerUI extends JPanel implements KeyListener {
 	int V = -10000000;
 	int C = -10000;
 	int SQ = 120;
-	int LL = 0;
-	int KK = 0;
-	int JJ = 0;
+	int LL = 255;
+	int KK = 255;
+	int JJ = 255;
 	int JN = 0;
 	int KN = 0;
 	int LN = 0;
@@ -46,7 +46,8 @@ int YY = 0;
 	 int GN = 0;
 	 int BN = 0;
 Set<blockCreatorRGBXY> blocks = new HashSet<>();
-
+Set<blockCreatorRGBXY> blocksN = new HashSet<>();
+Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 	private final Set<Integer> pressed = new HashSet<>();
 	{
 		javax.swing.Timer timer = new Timer(15, e -> {
@@ -74,6 +75,9 @@ Set<blockCreatorRGBXY> blocks = new HashSet<>();
 		}
 		if(keyCode == KeyEvent.VK_COMMA){
 			saved = !saved;
+		}
+		if(keyCode == KeyEvent.VK_SHIFT){
+			blocks.clear(); 
 		}
 	}
 
@@ -377,7 +381,38 @@ Set<blockCreatorRGBXY> blocks = new HashSet<>();
 				}
 			}
 		}
-
+if(SQ == 120){
+	if(SQA == 40){
+		if(keyCode == KeyEvent.VK_ENTER){
+			blocksN.clear();
+			blocksN.addAll(blocks);
+		}
+	}
+}
+if(SQ == 120){
+	if(SQA == 80){
+		if(keyCode == KeyEvent.VK_ENTER){
+			blocks.clear();
+			blocks.addAll(blocksN);
+		}
+	}
+}
+if(SQ == 560){
+	if(SQA == 40){
+		if(keyCode == KeyEvent.VK_ENTER){
+			blocksB.clear();
+			blocksB.addAll(blocks);
+		}
+	}
+}
+if(SQ == 560){
+	if(SQA == 80){
+		if(keyCode == KeyEvent.VK_ENTER){
+			blocks.clear();
+			blocks.addAll(blocksB);
+		}
+	}
+}
 		if (keyCode == KeyEvent.VK_PERIOD){
 			blockCreatorRGBXY block = new blockCreatorRGBXY();
 			block.x=x;
@@ -385,6 +420,30 @@ Set<blockCreatorRGBXY> blocks = new HashSet<>();
 			block.block=new Color(R, G, B);
 			blocks.add(block);
 		}
+		if(keyCode == KeyEvent.VK_PAGE_DOWN){
+			SQA = 200;
+		}
+		if(SQA == 200){
+			SQ = 340;
+		}
+		if(SQ == 340){
+			SQA = 200;
+		}
+		if(keyCode == KeyEvent.VK_PAGE_UP){
+			SQ = 120;
+			SQA = 40;
+		}
+		if(SQ == 340){
+			if(SQA == 200){
+				if(keyCode == KeyEvent.VK_ENTER){
+					blocksN.addAll(blocksB);
+					blocksB.addAll(blocksN);
+					blocks.addAll(blocksN);
+					blocks.addAll(blocksB);
+				}
+			}
+		}
+		
 	}       
 	@Override
 	protected void paintComponent(Graphics graphics) {
@@ -438,6 +497,7 @@ Set<blockCreatorRGBXY> blocks = new HashSet<>();
 			graphics.drawString("SAVE", 560, 55);
 			graphics.drawString("USE", 120, 95);
 			graphics.drawString("USE", 560, 95);
+			graphics.drawString("add patterns", 310, 215);
 		}else if (help == true) {
 			graphics.setColor(Color.WHITE);
 			graphics.fillRect(0, 0, 1000000, 1000000);
@@ -446,13 +506,16 @@ Set<blockCreatorRGBXY> blocks = new HashSet<>();
 			graphics.drawString("p = reset location", 0, 50);
 			graphics.drawString("WASD = move square", 0, 80);
 			graphics.drawString("LKJRGB = change color of background/squares", 0, 120);
-			graphics.drawString("Full Stop/ Period = summon new square", 0, 140);
+			graphics.drawString("Full Stop/ Period = summon new squares", 0, 140);
 			graphics.drawString("VP = reset original square/ reset second square", 0, 170);
 			graphics.drawString("IO = change dimensions", 0, 200);
 			graphics.drawString("QT = change background to WHITE or BLACK", 0, 230);
 			graphics.drawString("1 2 3 4 5 = move square 10, 20, 30, 40, 50 pixles to the right", 0, 260);
 			graphics.drawString("COMMA = saved Skins", 0, 290);
 			graphics.drawString("ZXM = add 10 colour pixels to the squares RGB by 10", 0, 320);
+			graphics.drawString("arrow keys = move the hylighter square arround the GUI and use enter to activate the selected option", 0, 350);
+					graphics.drawString("use page up and down to select the add patterns", 0, 380);
+					
 		}
 	}
 

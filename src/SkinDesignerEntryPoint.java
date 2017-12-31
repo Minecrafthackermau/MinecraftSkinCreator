@@ -3,7 +3,7 @@
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-public class EntryPoint {
+public class SkinDesignerEntryPoint {
 
 	public static void main(String[] args) {
         JFrame skinDesigner = new JFrame("Minecraft Skin Designer");
