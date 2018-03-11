@@ -2,12 +2,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.List;
 
-public class SkinDesignerUI extends JPanel implements KeyListener {
+public class SkinDesignerUI extends JPanel implements KeyListener, MouseMotionListener {
+	{
+		addMouseMotionListener(this);
+	}
+	
 	boolean help = false;
 	boolean startDesigning = false;
 	boolean saved = false;    
@@ -45,14 +52,32 @@ int YY = 0;
 	 int RN = 0;
 	 int GN = 0;
 	 int BN = 0;
-Set<blockCreatorRGBXY> blocks = new HashSet<>();
-Set<blockCreatorRGBXY> blocksN = new HashSet<>();
-Set<blockCreatorRGBXY> blocksB = new HashSet<>();
+	 Set<blockCreatorRGBXY> blocksN = new HashSet<>();
+	 Set<blockCreatorRGBXY> blocksB = new HashSet<>();
+	 Set<blockCreatorRGBXY> blocks = new HashSet<>();
+	 int customOne = 480;
+	 int customTwo = 640;
+	 
+	 int mX=0;
+	 int mY=0;
+	 
+	 {
+	blockCreatorRGBXY block = new blockCreatorRGBXY();
+	block.x= customTwo/2;
+	block.y=customOne/2;
+	block.block=new Color(100, 0, 0);
+	blocks.add(block);
+	blocksN.add(block);
+	blocksB.add(block);
+}
+
 	private final Set<Integer> pressed = new HashSet<>();
+	private final Set<Integer> motion = new HashSet<>();
 	{
 		javax.swing.Timer timer = new Timer(15, e -> {
 			if (pressed.size() > 0) {
 				for (int keyCode : pressed) {
+				
 					updatePositionsFromHeldKeys(keyCode);
 				}
 				this.repaint();
@@ -66,6 +91,11 @@ Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 		return new Dimension(640, 480);
 	}
 
+	private void updatePositionsFromMouseMotion(int x, int y){
+		mX=x;
+		mY=y;
+	}
+	
 	private void updatePositionsFromKeyRelease(int keyCode){
 		if (keyCode == KeyEvent.VK_C) {
 			startDesigning = !startDesigning;
@@ -77,11 +107,12 @@ Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 			saved = !saved;
 		}
 		if(keyCode == KeyEvent.VK_SHIFT){
-			blocks.clear(); 
-		}
+			blocks.clear();
+			
 	}
-
+	}
 	private void updatePositionsFromHeldKeys(int keyCode){
+		if(startDesigning == true){
 		if (keyCode == KeyEvent.VK_D) {
 			x = x + 4;
 		}
@@ -138,8 +169,8 @@ Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 		if (keyCode == KeyEvent.VK_5) {
 			x = x + 50;
 		}
-		if (x > 610) {
-			x = 610;
+		if (x > customTwo-40){
+			x = customTwo-40;
 		}
 		if (x < 0) {
 			x = 0;
@@ -147,8 +178,8 @@ Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 		if (y < 0) {
 			y = 0;
 		}
-		if (y > 450) {
-			y = 450;
+		if (y > customOne-40){
+			y = customOne-40;
 		}
 
 		if(keyCode == KeyEvent.VK_Q){
@@ -219,7 +250,7 @@ Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 			B = 0;
 		}
 		if(WITH > 480){
-			WITH = 640;
+			WITH = customTwo;
 		}
 		if(HEIGHT > 480){
 			HEIGHT = 480;
@@ -232,6 +263,7 @@ Set<blockCreatorRGBXY> blocksB = new HashSet<>();
 		}
 		if(keyCode == KeyEvent.VK_M){
 			B = B+10;
+		}
 		}
 		if(keyCode ==  KeyEvent.VK_RIGHT){
 			SQ = 560;
@@ -443,34 +475,39 @@ if(SQ == 560){
 				}
 			}
 		}
-		
+			
 	}       
 	@Override
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 
+		Dimension mySize = this.getSize();
+
+		this.customOne=mySize.height;
+		this.customTwo=mySize.width;
+		
 		graphics.setColor(Color.BLUE);
-		graphics.fillRect(0, 0, 100000000, 100000000);
+		graphics.fillRect(0, 0, customTwo, customOne);
 
 		graphics.setColor(Color.YELLOW);
-		graphics.fillRect(0, 0, 1000, 50);
+		graphics.fillRect(0, 0, customTwo, 50);
 
 		graphics.setColor(Color.BLACK);
-		graphics.drawString("skin creator", 350, 30);
+		graphics.drawString("skin creator", customTwo/2, 30);
 
 		graphics.setColor(Color.RED);
-		graphics.fillRect(0, 0, 30, 10000);
-		graphics.fillRect(610, 0, 30, 100000);
+		graphics.fillRect(0, 0, 30, customOne);
+		graphics.fillRect(customTwo-30, 0, 30, customOne);
 		graphics.setColor(Color.GREEN);
-		graphics.drawString("WELCOME TO THE ADVANCED SKIN CREATOR", 150, 250);
+		graphics.drawString("WELCOME", customTwo/2, customOne/2-30);
 		graphics.setColor(Color.GREEN);
-		graphics.fillRect(0, 450, 100000000, 30);
-
+		graphics.fillRect(0, customOne-30, customTwo, 30);
+		graphics.drawString("Mouse location = X: " + mX + ", Y: " + mY, 100, 100);
 		if (startDesigning) {
 			graphics.setColor(new Color(L, K, J));
 			graphics.fillRect(0, 0, 1000000, 10000000);
 			graphics.setColor(new Color(R, G, B));
-			graphics.drawRect(x, y, 40, 40);
+			graphics.drawRect(x, y, WITH, HEIGHT);
 			
 			blockCreatorRGBXY[] blocksToDraw = blocks.toArray(new blockCreatorRGBXY[]{});
 			for(int i=0; i < blocksToDraw.length; i++) {
@@ -478,9 +515,11 @@ if(SQ == 560){
 				graphics.setColor(block.block);
 				graphics.fillRect(block.x, block.y, 40, 40);
 			}
+			graphics.setColor(Color.WHITE);
+			graphics.drawString("Square location = X: " + x + ", Y: " + y, 100, 100);
 		}
 		graphics.setColor(Color.WHITE);
-		graphics.drawString("H = help", 240, 300);
+		graphics.drawString("H = help", customTwo/2, customOne/2);
 		if(saved == true){
 			graphics.setColor(Color.RED);
 			graphics.fillRect(0,  0,  100000,  100000);
@@ -517,6 +556,9 @@ if(SQ == 560){
 					graphics.drawString("use page up and down to select the add patterns", 0, 380);
 					
 		}
+		
+		
+
 	}
 
 	@Override
@@ -537,6 +579,18 @@ if(SQ == 560){
 		pressed.remove(keyCode);
 		updatePositionsFromKeyRelease(keyCode);
 		updatePositionsFromHeldKeys(keyCode);
+		this.repaint();
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		updatePositionsFromMouseMotion(arg0.getX(), arg0.getY());
 		this.repaint();
 	}
 }

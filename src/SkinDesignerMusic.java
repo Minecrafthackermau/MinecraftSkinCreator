@@ -7,9 +7,10 @@ public class SkinDesignerMusic implements Runnable {
 	private Player player;
 	private Pattern baseProgression;
 	private Pattern rhythm;
-	
+
 	private SkinDesignerMusic() {
 		player = new Player();
+		
 		baseProgression = new ChordProgression("I iv V X c")
 	                .distribute("7%6")
 	                .allChordsAs("$2 $2 $2 $2 $2 $2 $2 $2 $2 $0 $0 $0 $2 $0")
